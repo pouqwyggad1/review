@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  scraper:
+    build: .
+    command: /venv/bin/python /app/scraper.py
+    volumes:
+      - .:/app
+      - ./processors.db:/app/processors.db
+    environment:
+      - PATH=/venv/bin:$PATH
+
+  web:
+    build: .
+    command: /venv/bin/uvicorn app:app --host 0.0.0.0 --port 8000
+    volumes:
+      - .:/app
+      - ./processors.db:/app/processors.db
+    ports:
+      - "8000:8000"
+    environment:
+      - PATH=/venv/bin:$PATH

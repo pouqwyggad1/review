@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Processor List</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            padding: 0;
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        form {
+            margin-bottom: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        select {
+            padding: 5px;
+            font-size: 14px;
+        }
+
+        button {
+            padding: 5px 10px;
+            font-size: 14px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f4f4f4;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        a {
+            color: #007BFF;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Processors</h1>
+    <form method="get" action="/">
+        <label for="category">Category:</label>
+        <select name="category" id="category">
+            <option value="">All</option>
+            {% for category in categories %}
+                <option value="{{ category }}" {% if category == selected_category %}selected{% endif %}>{{ category }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="socket">Socket:</label>
+        <select name="socket" id="socket">
+            <option value="">All</option>
+            {% for socket in sockets %}
+                <option value="{{ socket }}" {% if socket == selected_socket %}selected{% endif %}>{{ socket }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="cores">Cores:</label>
+        <select name="cores" id="cores">
+            <option value="">All</option>
+            {% for cores in cores %}
+                <option value="{{ cores }}" {% if cores == selected_cores %}selected{% endif %}>{{ cores }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="max_frequency">Max Frequency (GHz):</label>
+        <select name="max_frequency" id="max_frequency">
+            <option value="">All</option>
+            {% for max_freq in max_frequencies %}
+                <option value="{{ max_freq }}" {% if max_freq == selected_max_frequency %}selected{% endif %}>{{ max_freq }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">Filter</button>
+    </form>
+
+    <table>
+        <thead>
+            <tr>
+                <th>№</th>
+                <th>Название</th>
+                <th>Тип</th>
+                <th>Дата выхода</th>
+                <th>Сокет</th>
+                <th>Кол-во ядер</th>
+                <th>Макс. частота (GHz)</th>
+                <th>Ссылка</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for processor in processors %}
+                <tr>
+                    <td>{{ processor[0] }}</td>
+                    <td>{{ processor[1] }}</td>
+                    <td>{{ processor[2] }}</td>
+                    <td>{{ processor[3] }}</td>
+                    <td>{{ processor[4] }}</td>
+                    <td>{{ processor[5] }}</td>
+                    <td>{{ processor[6] }}</td>
+                    <td><a href="{{ processor[7] }}">Ссылка</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
